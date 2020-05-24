@@ -5,7 +5,7 @@ import "./join.css";
 
 const Join = () => {
   const [name, setName] = useState("");
-  const [room, setrRom] = useState("");
+  const [room, setRoom] = useState("");
 
   return (
     <div className="joinOuterContainer">
@@ -24,7 +24,7 @@ const Join = () => {
             placeholder="Room"
             className="joinInput mt-20"
             type="text"
-            onChange={(e) => setrRom(e.target.value)}
+            onChange={(e) => setRoom(e.target.value)}
           />
         </div>
         <Link
