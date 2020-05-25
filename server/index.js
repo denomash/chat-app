@@ -34,10 +34,11 @@ io.on("connection", (socket) => {
   // Functionality when user sends a message
   socket.on("sendMessage", (message, callBack) => {
     const user = getUser(socket.id);
+    console.log("+++USER+++", user);
 
     io.to(user.room).emit("message", { user: user.name, text: message });
 
-    callBack()
+    callBack();
   });
 
   socket.on("disconnect", () => {
