@@ -28,13 +28,17 @@ io.on("connection", (socket) => {
 
     socket.join(user.room);
 
+    io.to(user.room).emit("roomData", {
+      room: user.room,
+      users: getUserInRoom(user.room),
+    });
+
     callBack();
   });
 
   // Functionality when user sends a message
   socket.on("sendMessage", (message, callBack) => {
     const user = getUser(socket.id);
-    console.log("+++USER+++", user);
 
     io.to(user.room).emit("message", { user: user.name, text: message });
 
@@ -42,7 +46,17 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("User has left!!!");
+    const user = removeUser(socket.id);
+
+    io.to(user.room).emit("message", {
+      user: "admin",
+      test: `${user.name} has left.`,
+    });
+
+    io.to(user.room).emit("roomData", {
+      room: user.room,
+      users: getUserInRoom(user.room),
+    });
   });
 });
 
